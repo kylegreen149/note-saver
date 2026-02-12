@@ -4,7 +4,7 @@ import './App.css'
 import { resumeAndPrerenderToNodeStream } from 'react-dom/static'
 
 function App() {
-  const [notes, setNotes] = useState([{"id": 1, "note": "An apple is red"}, {"id": 2, "note": "An apple has seeds"}])
+  const [notes, setNotes] = useState(() => JSON.parse(localStorage.getItem("notes")) || [{"id": 1, "note": "An apple is red"}, {"id": 2, "note": "An apple has seeds"}])
   const [newNote, setNewNote] = useState("")
 
   const handleChange = e => setNewNote(e.target.value)
@@ -15,6 +15,11 @@ function App() {
   }
   // console.log(newNote)
   console.log(notes)
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes))
+  }, [notes])
+
   return (
     <div>
       <h1>My Notes</h1>
