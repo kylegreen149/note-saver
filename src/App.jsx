@@ -10,6 +10,7 @@ function App() {
   const handleChange = e => setNewNote(e.target.value)
   const addNote = e => {
     e.preventDefault()
+    if (!newNote.trim()) return
     setNotes(prev => [...prev, {"id": crypto.randomUUID(), "note": newNote}])
     setNewNote("")
   }
