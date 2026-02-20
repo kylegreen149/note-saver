@@ -7,6 +7,10 @@ function App() {
   const [notes, setNotes] = useState(() => JSON.parse(localStorage.getItem("notes")) || [{"id": 1, "note": "An apple is red"}, {"id": 2, "note": "An apple has seeds"}])
   const [newNote, setNewNote] = useState("")
 
+  const noteCount = notes.length
+  const hasNotes = noteCount > 0
+  const isOverLimit = noteCount >= 10
+
   const handleChange = e => setNewNote(e.target.value)
   const addNote = e => {
     e.preventDefault()
@@ -28,6 +32,10 @@ function App() {
   return (
     <div>
       <h1>My Notes</h1>
+      <div className='summary'>
+        {hasNotes ? <p>You have {noteCount} notes</p> : <p>No Notes Yet</p>}
+        {isOverLimit && <p style={{color: "green", fontWeight: "900"}}>Note Taking Machine!</p>}
+      </div>
       <AddNotesForm newNote={newNote} handleChange={handleChange} addNote={addNote}/>
       {notes.map(note => <Note key={note.id} note={note} deleteNote={deleteNote} />)}
     </div>
